@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mora Christian Center</title>
+<meta name="description" content="Mora Christian Center - Worship, Sunday School, Services & Contact" />
+<style>
+  :root{
+    --bg:#0f1720;            /* very dark blue-gray */
+    --panel:#111827;         /* dark panel */
+    --muted:#9aa6b2;         /* muted gray-blue */
+    --accent:#2b6ea3;        /* blue accent */
+    --accent-2:#4a90e2;
+    --card:#0b1220;
+    --glass: rgba(255,255,255,0.03);
+    --radius:12px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #e6eef6;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background: linear-gradient(180deg,var(--bg) 0%, #071021 100%);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+  }
+
+  /* container */
+  .wrap{max-width:1100px;margin:48px auto;padding:24px}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{
+    width:56px;height:56px;border-radius:10px;background:
+    linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;font-weight:700;
+    box-shadow:0 6px 18px rgba(42,90,140,0.25);
+  }
+  .logo span{font-size:18px;color:white}
+  h1{margin:0;font-size:20px}
+  nav a{color:var(--muted);text-decoration:none;margin-left:16px;font-weight:600}
+  nav a:hover{color:var(--accent-2)}
+
+  /* hero */
+  .hero{
+    margin-top:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    padding:32px;border-radius:var(--radius);display:grid;grid-template-columns:1fr 320px;gap:24px;
+  }
+  .intro h2{margin:0 0 8px 0;font-size:28px}
+  .intro p{color:var(--muted);margin:0 0 18px 0}
+  .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;border:0}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+
+  /* schedule */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:26px}
+  .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  .time{font-size:18px;font-weight:700;color:var(--accent-2)}
+  .label{color:var(--muted);margin-top:6px}
+
+  /* contact & socials */
+  .contact{display:flex;flex-direction:column;gap:12px}
+  .contact a{color:var(--muted);text-decoration:none}
+  .small{font-size:13px;color:var(--muted)}
+
+  footer{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .copyright{color:var(--muted);font-size:13px}
+
+  /* animations: fade-in / pop */
+  .reveal{opacity:0;transform:translateY(20px) scale(0.995);transition:opacity 700ms cubic-bezier(.2,.9,.2,1), transform 700ms cubic-bezier(.2,.9,.2,1)}
+  .reveal.revealed{opacity:1;transform:none}
+
+  /* edit toolbar */
+  .edit-toolbar{position:fixed;right:18px;bottom:18px;z-index:9000;display:flex;flex-direction:column;gap:10px}
+  .edit-toggle{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:12px;border-radius:12px;border:0;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(40,80,140,0.25)}
+  .save-btn{background:#1f2937;color:white;padding:10px;border-radius:10px;border:0;cursor:pointer}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* responsive */
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr; padding:20px}
+    .logo{width:48px;height:48px}
+    .wrap{margin:18px auto}
+  }
+
+  /* small helpers for editable highlights */
+  .editable{outline: 2px dashed rgba(74,144,226,0.15);border-radius:6px;padding:2px}
+  .editing .editable{outline: 2px dashed rgba(255,255,255,0.12);background:rgba(255,255,255,0.01)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="reveal" id="brand">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><span>MCC</span></div>
+      <div>
+        <h1 contenteditable="false" id="site-title" class="editable">Mora Christian Center</h1>
+        <div class="small" id="tagline" contenteditable="false">Pastor Jerry & Rachel Martinez</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#give">Ways to Give</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero reveal" id="home" aria-labelledby="home-title">
+    <div class="intro">
+      <h2 id="home-title" contenteditable="false" class="editable">Welcome to Mora Christian Center</h2>
+      <p id="hero-text" contenteditable="false" class="editable">Join us in worship and community — Sunday School, Sunday Worship, Sunday Night Service, and Wednesday Evening Service. We are located in Mora, New Mexico. All are welcomed.</p>
+      <div class="cta">
+        <a class="btn" href="tel:+15053409088" id="call-btn">Call / Text (505) 340-9088</a>
+        <a class="btn secondary" href="#services">See Services</a>
+        <a class="btn secondary" id="youtube-link" href="https://www.youtube.com/@mora_christiancenter" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <h3 class="small">Next Service</h3>
+      <div style="margin-top:10px">
+        <div class="time" id="next-service" contenteditable="false" class="editable">Sunday Worship — 10:30 AM</div>
+        <div class="small">Sunday School 9:30 AM · Sunday Night 6:00 PM · Wed 7:00 PM</div>
+      </div>
+      <hr style="margin:12px 0;border:0;border-top:1px solid rgba(255,255,255,0.03)">
+      <div class="small"><strong>Ways to Give</strong></div>
+      <div style="margin-top:8px">
+        <div class="small">Cash App code: <span id="cashcode" contenteditable="false" class="editable" style="color:var(--accent-2);font-weight:700">$JMtz2999</span></div>
+        <div class="small" style="margin-top:6px">Mail: <span id="mail" contenteditable="false" class="editable">PO Box 753, Mora, NM</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <section id="services" class="reveal" style="margin-top:26px">
+    <h3 contenteditable="false" class="editable">Service Schedule</h3>
+    <div class="grid" style="margin-top:12px">
+      <div class="card reveal">
+        <div class="time" contenteditable="false" class="editable">Sunday School</div>
+        <div class="label">9:30 AM</div>
+      </div>
+      <div class="card reveal">
+        <div class="time" contenteditable="false" class="editable">Sunday Morning Worship</div>
+        <div class="label">10:30 AM</div>
+      </div>
+      <div class="card reveal">
+        <div class="time" contenteditable="false" class="editable">Sunday Night Service</div>
+        <div class="label">6:00 PM</div>
+      </div>
+      <div class="card reveal">
+        <div class="time" contenteditable="false" class="editable">Wednesday Evening Service</div>
+        <div class="label">7:00 PM</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="give" class="reveal" style="margin-top:26px;display:grid;grid-template-columns:1fr 320px;gap:24px">
+    <div class="panel">
+      <h3 contenteditable="false" class="editable">Ways to Give</h3>
+      <p class="small" contenteditable="false" class="editable">Cash App: <strong style="color:var(--accent-2)">$JMtz2999</strong></p>
+      <p class="small" contenteditable="false" class="editable">Mail donations to: PO Box 753, Mora, New Mexico</p>
+      <p class="small" style="margin-top:14px">For questions about giving, call or text (505) 340-9088</p>
+    </div>
+
+    <div class="panel contact">
+      <div><strong>Contact Pastor</strong></div>
+      <div class="small">Pastor Jerry & Rachel Martinez</div>
+      <div style="margin-top:8px">
+        <a href="tel:+15053409088">(505) 340-9088</a>
+      </div>
+      <div style="margin-top:8px">
+        <a id="instagram-link" href="https://www.instagram.com/mora_christian_center" target="_blank" rel="noopener">@mora_christian_center</a>
+      </div>
+      <div style="margin-top:8px">
+        <a id="youtube-link-2" href="https://www.youtube.com/@mora_christiancenter" target="_blank" rel="noopener">@mora_christiancenter</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="reveal" style="margin-top:26px">
+    <div class="panel">
+      <h3 contenteditable="false" class="editable">Get In Touch</h3>
+      <p class="small" contenteditable="false" class="editable">Phone: <a href="tel:+15053409088">(505) 340-9088</a></p>
+      <p class="small">Mail: <span contenteditable="false" id="mail2" class="editable">PO Box 753, Mora, NM</span></p>
+      <p class="small" style="margin-top:12px">YouTube: <a href="https://www.youtube.com/@mora_christiancenter" target="_blank" rel="noopener">mora_christiancenter</a></p>
+      <p class="small">Instagram: <a href="https://www.instagram.com/mora_christian_center" target="_blank" rel="noopener">mora_christian_center</a></p>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="copyright">© <span id="year"></span> Mora Christian Center — Pastor Jerry & Rachel Martinez</div>
+    <div class="small">PO Box 753, Mora, NM · Cash App: <strong style="color:var(--accent-2)">$JMtz2999</strong></div>
+  </footer>
+</div>
+
+<!-- Edit toolbar -->
+<div class="edit-toolbar" aria-hidden="false">
+  <button class="edit-toggle" id="edit-toggle">Enter Edit Mode</button>
+  <button class="save-btn" id="save-btn" style="display:none">Save Changes</button>
+  <div class="note">Edit mode saves to your browser only. See notes for hosting & security.</div>
+</div>
+
+<script>
+  // basic page setup
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // IntersectionObserver for reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        observer.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.12});
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.card.reveal').forEach(el => observer.observe(el));
+
+  // Editable fields selector
+  const editableSelector = [
+    '#site-title','#tagline','#home-title','#hero-text',
+    '#next-service','#cashcode','#mail','#mail2',
+    // service labels (they are contenteditable false initially but we'll toggle)
+  ];
+
+  // add service card titles to editableSelector
+  document.querySelectorAll('#services .card .time').forEach((n, i) => {
+    n.setAttribute('id','service-'+i);
+    editableSelector.push('#service-'+i);
+  });
+
+  // Edit mode logic
+  const editToggle = document.getElementById('edit-toggle');
+  const saveBtn = document.getElementById('save-btn');
+  let editing = false;
+
+  // PASSWORD: change this in code for better security.
+  // If you want to set password from first run, we allow setting it (see notes below).
+  const PASSWORD_KEY = 'mcc_edit_pass';
+  const CONTENT_KEY = 'mcc_saved_content';
+
+  // utility: prompt for password; returns true if success
+  function requirePassword(forSet=false){
+    const stored = localStorage.getItem(PASSWORD_KEY);
+    if(!stored){
+      // first-time setup: ask to create password
+      const first = prompt('Set an edit password for this site (make it strong). It will be stored in this browser only.');
+      if(first && first.trim().length>0){
+        localStorage.setItem(PASSWORD_KEY, first.trim());
+        alert('Password saved locally for this browser. Use it to enter edit mode.');
+        return true;
+      }
+      return false;
+    } else {
+      const p = prompt('Enter edit password:');
+      if(p === stored) return true;
+      alert('Incorrect password.');
+      return false;
+    }
+  }
+
+  // toggle editable attributes
+  function setEditing(on){
+    editing = on;
+    document.body.classList.toggle('editing', on);
+    document.querySelectorAll(editableSelector.join(',')).forEach(el=>{
+      el.contentEditable = on ? 'true' : 'false';
+      if(on) el.classList.add('editable');
+      else el.classList.remove('editable');
+    });
+    editToggle.textContent = on ? 'Exit Edit Mode' : 'Enter Edit Mode';
+    saveBtn.style.display = on ? 'inline-block' : 'none';
+  }
+
+  // load saved content
+  function loadSaved(){
+    const saved = localStorage.getItem(CONTENT_KEY);
+    if(saved){
+      try{
+        const data = JSON.parse(saved);
+        Object.keys(data).forEach(sel=>{
+          const el = document.querySelector(sel);
+          if(el) el.innerHTML = data[sel];
+        });
+      }catch(e){console.warn('Saved data corrupt');}
+    }
+  }
+  loadSaved();
+
+  // save content
+  function saveContent(){
+    const obj = {};
+    document.querySelectorAll(editableSelector.join(',')).forEach(el=>{
+      obj['#'+el.id] = el.innerHTML;
+    });
+    localStorage.setItem(CONTENT_KEY, JSON.stringify(obj));
+    alert('Changes saved locally to this browser.');
+    setEditing(false);
+  }
+
+  editToggle.addEventListener('click', async ()=>{
+    if(!editing){
+      const ok = requirePassword();
+      if(!ok) return;
+      setEditing(true);
+      // focus first field
+      const first = document.querySelector(editableSelector[0]);
+      if(first) first.focus();
+    } else {
+      // exit editing without saving
+      if(confirm('Exit edit mode without saving? Unsaved changes will be lost.')) setEditing(false);
+    }
+  });
+
+  saveBtn.addEventListener('click', saveContent);
+
+  // keyboard shortcut: ctrl+e to enter/exit edit mode
+  document.addEventListener('keydown', (e)=>{
+    if(e.ctrlKey && e.key.toLowerCase() === 'e'){
+      e.preventDefault();
+      editToggle.click();
+    }
+    if(e.ctrlKey && e.key.toLowerCase() === 's' && editing){
+      e.preventDefault();
+      saveContent();
+    }
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', (ev)=>{
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){
+        ev.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // Small: open external links in new tab for safety already set by rel noopener in markup
+</script>
+</body>
+</html>
